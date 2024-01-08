@@ -31,7 +31,8 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/members", "/aichat").authenticated()
+                        /** 서비스 권한 제한 */
+                        .requestMatchers("/members", "/aichat","board/write").authenticated()
                         .anyRequest().permitAll())
                 .formLogin(form -> form
                         .loginPage("/login")

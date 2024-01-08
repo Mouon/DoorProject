@@ -2,9 +2,12 @@ package moon.hellomoon;
 
 import jakarta.persistence.EntityManager;
 import moon.hellomoon.aop.TimeTraceAop;
+import moon.hellomoon.repository.BoardRepository;
 import moon.hellomoon.repository.JpaMemberRepository;
 import moon.hellomoon.repository.MemberRepository;
+import moon.hellomoon.repository.jpaBoardRepository;
 import moon.hellomoon.service.MemberService;
+import moon.hellomoon.service.board.BoardWriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,8 +33,14 @@ public class SpringConfig {
     }
 
     @Bean
+    public BoardWriteService boardWriteService(){return new BoardWriteService(boardRepository());}
+    @Bean
     public MemberRepository memberRepository(){
         return new JpaMemberRepository(em);
+    }
+
+    @Bean
+    public BoardRepository boardRepository(){return new jpaBoardRepository(em);
     }
 
 //    /**
