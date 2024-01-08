@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세</title>
+    <style>
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+
+        .header, .footer {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .article-details {
+            margin-top: 20px;
+            border-top: 1px solid #cccccc;
+            padding-top: 20px;
+        }
+
+        .article-details h2 {
+            margin-bottom: 10px;
+        }
+
+        .article-details .meta {
+            font-size: 0.9em;
+            color: #777777;
+            margin-bottom: 20px;
+        }
+
+        .article-details .content {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>게시글 상세 페이지</h1>
+    </div>
+
+    <div class="article-details">
+        <h2 th:text="${boardForm.title}">게시글 제목</h2>
+        <p class="meta">
+            <span th:text="${boardForm.date}">게시 날짜</span>
+        </p>
+        <div class="content" th:text="${boardForm.content}">
+            게시글 내용
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Hello Moon</p>
+    </div>
+</div>
+</body>
+</html>
