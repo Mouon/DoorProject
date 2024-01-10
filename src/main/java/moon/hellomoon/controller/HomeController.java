@@ -14,7 +14,6 @@ public class HomeController {
     public String aiChat(){
         return "service/aichat";
     }
-
     @GetMapping("/reset-password")
     public String resetPassword(){
         return "members/reset-password";

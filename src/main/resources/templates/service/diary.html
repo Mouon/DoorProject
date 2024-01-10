@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Diary</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div th:replace="navbar :: navbar"></div>
+
+<div class="container mt-5">
+  <h1 class="text-center">My Diary</h1>
+  <div id="eventForm" class="row mt-4">
+    <div class="col-md-4">
+      <input type="date" id="eventDate" class="form-control" placeholder="날짜">
+    </div>
+    <div class="col-md-6">
+      <input type="text" id="eventDescription" class="form-control" placeholder="일정 설명">
+    </div>
+    <div class="col-md-2 d-flex">
+      <button class="btn btn-outline-primary mr-2" onclick="addEvent()">일정<br>추가</button>
+      <button class="btn btn-outline-success" onclick="getDailyEvents()">일정<br>조회</button>
+      <button class="btn btn-outline-success" onclick="getEvents()">전체<br>조회</button>
+    </div>
+  </div>
+  <div id="eventsList" class="mt-4">
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+
+$(document).ready(function() {
+    getEvents();
+});
+
+function addEvent() {
+    var date = $('#eventDate').val();
+    var description = $('#eventDescription').val();
+
+    $.ajax({
+        url: '/addEvent',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ eventDate: date, eventDescription: description }),
+        success: function(response) {
+            $('#eventsList').append('<div class="alert alert-info">' + date + ': ' + description + '</div>');
+            $('#eventDate').val('');
+            $('#eventDescription').val('');
+        },
+        error: function(xhr, status, error) {
+            // 오류 처리
+            console.error("Error: " + error);
+        }
+    });
+}
+function getEvents() {
+    var date = $('#eventDate').val();
+
+    $.ajax({
+        url: '/getEvents',
+        method: 'GET',
+        data: { eventDate: date },
+        success: function(response) {
+            displayEvents(response);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error: " + error);
+        }
+    });
+}
+
+function getDailyEvents() {
+    var date = $('#eventDate').val();
+
+    $.ajax({
+        url: '/getDailyEvents',
+        method: 'GET',
+        data: { eventDate: date },
+        success: function(response) {
+            displayEvents(response);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error: " + error);
+        }
+    });
+}
+
+function displayEvents(events) {
+    $('#eventsList').empty();
+
+    events.forEach(event => {
+        $('#eventsList').append('<div class="alert alert-info">' + event.eventDate + ': ' + event.eventDescription + '</div>');
+    });
+
+}
+</script>
+
+</body>
+</html>

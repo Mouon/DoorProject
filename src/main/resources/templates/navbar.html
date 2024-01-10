@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
+  <a class="navbar-brand" th:href="@{/}">Moon</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item"><a th:href="@{/board/board-list}" class="nav-link">게시판</a></li>
+    </ul>
+    <ul class="navbar-nav">
+      <li class="nav-item"><a th:href="@{/login}" class="nav-link">로그인</a></li>
+      <li class="nav-item"><a th:href="@{/logout}" class="nav-link">로그아웃</a></li>
+      <li class="nav-item"><a th:href="@{/members/new}" class="nav-link">회원 가입</a>
+      <li class="nav-item"><a th:href="@{/members}" class="nav-link">회원 목록</a></li>
+      </li>
+    </ul>
+  </div>
+</nav>
+</html>

@@ -25,7 +25,8 @@ public class jpaBoardRepository implements BoardRepository{
     @Override
     public Optional<Board> findById(long id) {
         Board board = em.find(Board.class,id);
-        return Optional.ofNullable(board);    }
+        return Optional.ofNullable(board);
+    }
 
     @Override
     public Optional<Board> findByTitle(String title) {

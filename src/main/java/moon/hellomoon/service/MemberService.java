@@ -2,7 +2,6 @@ package moon.hellomoon.service;
 
 import moon.hellomoon.domain.Member;
 import moon.hellomoon.repository.MemberRepository;
-import moon.hellomoon.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

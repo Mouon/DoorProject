@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
                         /** 서비스 권한 제한 */
-                        .requestMatchers("/members", "/aichat","board/write").authenticated()
+                        .requestMatchers("/members", "/aichat","board/write","/diary").authenticated()
                         .anyRequest().permitAll())
                 .formLogin(form -> form
                         .loginPage("/login")
