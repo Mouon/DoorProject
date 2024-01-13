@@ -1,7 +1,7 @@
-package moon.hellomoon.service;
+package moon.hellomoon.service.member;
 
 import moon.hellomoon.domain.Member;
-import moon.hellomoon.repository.MemberRepository;
+import moon.hellomoon.repository.repositoryInterface.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

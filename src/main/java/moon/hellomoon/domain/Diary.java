@@ -15,13 +15,13 @@ public class Diary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "member_id")
     private Member member; // Member 엔티티에 대한 참조
     @Column(name = "event_date")
     private LocalDate eventDate;
     @Column(name = "event_description")
-    private String EventDescription;
+    private String eventDescription;
     @Column(name = "create_date")
     private String CreateDate;
     @Column(name = "modify_date")
@@ -46,11 +46,11 @@ public class Diary {
     }
 
     public String getEventDescription() {
-        return EventDescription;
+        return eventDescription;
     }
 
     public void setEventDescription(String eventDescription) {
-        EventDescription = eventDescription;
+        eventDescription = eventDescription;
     }
 
     public String getCreateDate() {

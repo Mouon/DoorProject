@@ -18,4 +18,16 @@ public class HomeController {
     public String resetPassword(){
         return "members/reset-password";
     }
+
+    @GetMapping("/members/member-detail")
+    public String memberDetail(){
+        return "members/memberDetail";
+    }
+
+    @GetMapping("/draw-code")
+    public String drawCode(){
+        return "service/drawCode";
+    }
+
+
 }

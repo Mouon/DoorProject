@@ -24,12 +24,40 @@
             margin: 40px 0;
         }
         .nav-link {
-            color: #000000; /* This sets the link color to black */
+            color: #000000;
         }
         .nav-link:hover {
-            color: #555555; /* Color when the mouse hovers over the link */
-            text-decoration: none; /* Removes the underline */
+            color: #555555;
+            text-decoration: none;
         }
+        #bookmarksList {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        white-space: nowrap;
+        margin: 0 auto;
+        }
+
+        .bookmark-card {
+            width: 100px;
+            height: 100px;
+            margin-right: 10px;
+            display: inline-block;
+            background-size: cover;
+            background-position: center;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .bookmark-card:hover {
+            transform: scale(1.05);
+        }
+        .a {
+            text-decoration: none; /* 파란 선 제거 */
+        }
+
     </style>
 </head>
 <body>
@@ -49,6 +77,7 @@
                 <li class="nav-item"><a th:href="@{/logout}" class="nav-link">로그아웃</a></li>
                 <li class="nav-item"><a th:href="@{/members/new}" class="nav-link">회원 가입</a>
                 <li class="nav-item"><a th:href="@{/members}" class="nav-link">회원 목록</a></li>
+                <li class="nav-item"><a th:href="@{/members/member-detail}" class="nav-link">회원 정보 조회</a></li>
                 </li>
             </ul>
         </div>
@@ -59,8 +88,15 @@
         <p>Explore our amazing features</p>
         <p>You can manage your schedule efficiently</p>
         <ul class="nav justify-content-center">
-            <li class="nav-item"><a th:href="@{/aichat}" class="nav-link">AI Chat</a></li>
-            <li class="nav-item"><a th:href="@{/diary}" class="nav-link">My Diary</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    AI Chat
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" th:href="@{/aichat}">AI Chat</a>
+                    <a class="dropdown-item" th:href="@{/draw-code}">DrawCode</a>
+                </div>
+            </li>            <li class="nav-item"><a th:href="@{/diary}" class="nav-link">My Diary</a></li>
         </ul>
     </div>
 
@@ -70,10 +106,18 @@
             <div id="eventsList" class="mt-4">
             </div>
         </ul>
+        <br><br><br><br>
         <div class="feature-center">
             <h5>AI 추천 할일</h5>
             <div id="aiAdvice" class="mt-4"></div>
         </div>
+    </div>
+    <br><br><br><br>
+    <div class="feature-center">
+        <h5>북마크</h5>
+        <div id="bookmarksList" class="d-flex overflow-auto">
+        </div>
+        <button id="editBookmarks" class="btn btn-sm btn-primary mt-2">북마크 수정하기</button>
     </div>
 
 </div>
@@ -86,6 +130,8 @@ $(document).ready(function() {
     var today = new Date().toISOString().substring(0, 10);
 
     getEvents(today);
+    getBookmarks();
+
 });
 
 function getEvents(date) {
@@ -135,6 +181,46 @@ function displayAdvice(response) {
         $('#aiAdvice').append('<div class="alert alert-warning">일정을 등록하고 AI 추천을 받아보세요!</div>');
     }
 }
+function getBookmarks() {
+        $.ajax({
+            url: '/getBookmarks',
+            method: 'GET',
+            success: function(bookmarks) {
+                displayBookmarks(bookmarks);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error: " + error);
+            }
+        });
+    }
+
+function displayBookmarks(bookmarks) {
+    $('#bookmarksList').empty();
+    bookmarks.forEach(bookmark => {
+        var card = $('<a>', { // 링크를 추가한 카드뷰
+            href: bookmark.bookmarkUrl, // 링크 URL 설정
+            target: '_blank',
+        });
+
+        var cardContent = $('<div>', { // 카드뷰 내용을 담을 div
+            class: 'bookmark-card',
+        });
+
+        var name = $('<p>', {
+            text: bookmark.name,
+        });
+
+        cardContent.append(name); // div에 이름 추가
+        card.append(cardContent); // 링크에 div 추가
+        card.appendTo('#bookmarksList');
+    });
+}
+
+
+
+$('#editBookmarks').click(function() {
+    window.location.href = '/bookmark';
+});
 
 </script>
 </body>

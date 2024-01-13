@@ -1,19 +1,18 @@
-package moon.hellomoon.repository;
+package moon.hellomoon.repository.jpaRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import moon.hellomoon.domain.Board;
 import moon.hellomoon.domain.Diary;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import jakarta.persistence.EntityManager;
-import moon.hellomoon.domain.Member;
+
+import moon.hellomoon.repository.repositoryInterface.DiaryRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class JpaDiaryRepository implements DiaryRepository{
+public class JpaDiaryRepository implements DiaryRepository {
 
     private final EntityManager em;
 
@@ -27,6 +26,29 @@ public class JpaDiaryRepository implements DiaryRepository{
         em.persist(diary);
         return diary;
     }
+
+    /**
+     * 쿼리문으로 삭제하기
+     * */
+    @Override
+    @Transactional
+    public void deleteDiaryById(Long diaryId) {
+        em.createQuery("DELETE FROM Diary d WHERE d.id = :diaryId")
+                .setParameter("diaryId", diaryId)
+                .executeUpdate();
+    }
+
+    /** 일반적으로 수정 작업을 수행하고 나면 변경 사항을 저장하기 위해 save 또는 flush 메서드를 호출해야함 */
+    @Override
+    @Transactional
+    public void modifyDiaryById(Long diaryId, String newEventDescription) {
+        em.createQuery("UPDATE Diary d SET d.eventDescription = :newEventDescription WHERE d.id = :diaryId")
+                .setParameter("diaryId", diaryId)
+                .setParameter("newEventDescription", newEventDescription)
+                .executeUpdate();
+    }
+
+
 
     @Override
     public Optional<Diary> findById(long id) {

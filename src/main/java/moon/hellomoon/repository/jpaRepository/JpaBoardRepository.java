@@ -1,17 +1,17 @@
-package moon.hellomoon.repository;
+package moon.hellomoon.repository.jpaRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import moon.hellomoon.domain.Board;
-import moon.hellomoon.domain.Member;
+import moon.hellomoon.repository.repositoryInterface.BoardRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public class jpaBoardRepository implements BoardRepository{
+public class JpaBoardRepository implements BoardRepository {
     private final EntityManager em;
 
-    public jpaBoardRepository(EntityManager em) {
+    public JpaBoardRepository(EntityManager em) {
         this.em = em;
     }
 

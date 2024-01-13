@@ -1,6 +1,6 @@
 package moon.hellomoon;
 
-import moon.hellomoon.service.MemberDetailService;
+import moon.hellomoon.service.member.MemberDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
                         /** 서비스 권한 제한 */
-                        .requestMatchers("/members", "/aichat","board/write","/diary").authenticated()
+                        .requestMatchers("/members", "/aichat","board/write","/diary","/bookmark","/members/member-detail").authenticated()
                         .anyRequest().permitAll())
                 .formLogin(form -> form
                         .loginPage("/login")

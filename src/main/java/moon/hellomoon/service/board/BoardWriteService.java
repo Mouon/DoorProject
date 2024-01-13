@@ -1,7 +1,7 @@
 package moon.hellomoon.service.board;
 
 import moon.hellomoon.dto.BoardForm;
-import moon.hellomoon.repository.BoardRepository;
+import moon.hellomoon.repository.repositoryInterface.BoardRepository;
 import moon.hellomoon.domain.Board;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

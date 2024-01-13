@@ -1,4 +1,4 @@
-package moon.hellomoon.repository;
+package moon.hellomoon.repository.repositoryInterface;
 
 import moon.hellomoon.domain.Board;
 import moon.hellomoon.domain.Member;

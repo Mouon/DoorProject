@@ -1,4 +1,4 @@
-package moon.hellomoon.service;
+package moon.hellomoon.service.ai;
 
 import org.springframework.stereotype.Service;
 

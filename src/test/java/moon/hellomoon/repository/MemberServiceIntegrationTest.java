@@ -2,13 +2,12 @@ package moon.hellomoon.repository;
 
 import jakarta.transaction.Transactional;
 import moon.hellomoon.domain.Member;
-import moon.hellomoon.service.MemberService;
+import moon.hellomoon.repository.repositoryInterface.MemberRepository;
+import moon.hellomoon.service.member.MemberService;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Commit;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -19,7 +18,8 @@ public class MemberServiceIntegrationTest {
 
 
     @Autowired MemberService memberService;
-    @Autowired MemberRepository memberRepository;
+    @Autowired
+    MemberRepository memberRepository;
 
     @Test
     void 회원가입(){

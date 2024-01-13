@@ -1,9 +1,9 @@
-package moon.hellomoon.repository;
+package moon.hellomoon.repository.jpaRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import moon.hellomoon.domain.Member;
-import moon.hellomoon.repository.MemberRepository;
+import moon.hellomoon.repository.repositoryInterface.MemberRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +21,13 @@ public class JpaMemberRepository implements MemberRepository {
         em.persist(member);
         return member;
     }
+
+    @Override
+    @Transactional
+    public void delete(Member member) {
+        em.remove(em.merge(member));
+    }
+
 
     @Override
     public Optional<Member> findById(long id) {

@@ -16,7 +16,9 @@ body {
     font-size: 1.2rem;
     color: #6c757d;
 }
-
+.selected {
+    background-color: #d0e6f5;
+    }
 .button-group a.btn {
     width: 150px;
     margin-top: 10px;

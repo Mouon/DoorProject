@@ -4,8 +4,7 @@ import moon.hellomoon.domain.Member;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import moon.hellomoon.service.member.MemberService;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -22,7 +21,6 @@ class MemberServiceTest {
 
 
     MemberService memberService;
-    MemoryMemberRepository memberRepository;
 
     BCryptPasswordEncoder passwordEncoder;
 
@@ -32,16 +30,7 @@ class MemberServiceTest {
      * 각 테스트 시작하기 전에 실행
      * MemoryMemberRepository 인스턴스 만들고 MemberService에 주입 DI
      * */
-    @BeforeEach
-    public void beforeEach(){
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository,passwordEncoder);
-    }
 
-    @AfterEach
-    public void afterEach(){
-        memberRepository.clearStore();
-    }
 
     @Test
     void 회원가입() {

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Member Information</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+    .member-details {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="my-4 text-center">회원 정보</h2>
+    <div class="member-details">
+        <p><strong>이메일:</strong> <span id="memberEmail"></span></p>
+    </div>
+    <button id="deleteAccountBtn" class="btn btn-danger">회원 탈퇴</button>
+    <a href="/" class="btn btn-primary">홈으로 돌아가기</a>
+</div>
+<div class="modal" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">회원 탈퇴 확인</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>탈퇴를 원하시면 비밀번호를 입력해주세요.</p>
+                <input type="password" id="password" class="form-control" placeholder="비밀번호">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="confirmDelete">탈퇴하기</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function() {
+    // 페이지 로드 시 사용자 이메일 조회
+    $.ajax({
+        url: '/members/member-email',
+        method: 'GET',
+        success: function(email) {
+            $('#memberEmail').text(email);
+        },
+        error: function() {
+            alert('회원 정보를 불러오는 데 실패했습니다.');
+        }
+    });
+
+    // 탈퇴 버튼 클릭 이벤트
+    $('#deleteAccountBtn').click(function() {
+        $('#deleteModal').modal('show');
+    });
+
+    // 탈퇴 확인 버튼 클릭 이벤트
+    $('#confirmDelete').click(function() {
+        var password = $('#password').val();
+        $.ajax({
+            url: '/member/delete',
+            method: 'POST',
+            data: {
+                memberId: '여기에 현재 사용자의 ID', // 현재 사용자의 ID를 넣어야 합니다.
+                password: password
+            },
+            success: function(response) {
+                alert('회원 탈퇴가 완료되었습니다.');
+                window.location.href = '/';
+            },
+            error: function() {
+                alert('비밀번호가 일치하지 않거나 탈퇴 요청 중 문제가 발생했습니다.');
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>

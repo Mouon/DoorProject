@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <title>Diary</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .selected-event {
+      border: 2px solid blue;
+    }
+  </style>
 </head>
 <body>
 <div th:replace="navbar :: navbar"></div>
@@ -11,6 +16,7 @@
 <div class="container mt-5">
   <h1 class="text-center">My Diary</h1>
   <div id="eventForm" class="row mt-4">
+    <!-- 여기에 일정 입력 폼 및 수정 버튼 추가 -->
     <div class="col-md-4">
       <input type="date" id="eventDate" class="form-control" placeholder="날짜">
     </div>
@@ -21,9 +27,16 @@
       <button class="btn btn-outline-primary mr-2" onclick="addEvent()">일정<br>추가</button>
       <button class="btn btn-outline-success" onclick="getDailyEvents()">일정<br>조회</button>
       <button class="btn btn-outline-success" onclick="getEvents()">전체<br>조회</button>
+      <button id="modifyEvent" class="btn btn-outline-warning" onclick="modifySelectedEvent()">선택된 일정 수정</button>
+      <button id="deleteSelectedEvent" class="btn btn-outline-danger" onclick="deleteSelectedEvent()">선택된 일정 삭제</button>
     </div>
   </div>
   <div id="eventsList" class="mt-4">
+    <div th:each="event : ${events}">
+      <div class="alert alert-info" th:id="${'event-' + event.id}">
+        <span th:text="${event.eventDate} + ': ' + ${event.eventDescription}"></span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -90,10 +103,129 @@ function displayEvents(events) {
     $('#eventsList').empty();
 
     events.forEach(event => {
-        $('#eventsList').append('<div class="alert alert-info">' + event.eventDate + ': ' + event.eventDescription + '</div>');
+        var eventElement = $(
+            '<div class="alert alert-info" id="event-' + event.id + '">' +
+            event.eventDate + ': ' + event.eventDescription +
+            '</div>'
+        );
+        eventElement.click(function() {
+          if ($(this).hasClass('selected-event')) {
+          $(this).removeClass('selected-event');
+          } else {
+          $(this).addClass('selected-event');
+          }
+          });
+          $('#eventsList').append(eventElement);
+        });
+}
+
+
+function deleteEvent(eventId) {
+    $.ajax({
+        url: '/deleteEvent',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ id: eventId }), // 삭제할 다이어리 항목의 ID를 전송
+        success: function(response) {
+            $('#event-' + eventId).remove();
+        },
+        error: function(xhr, status, error) {
+            console.error("Error: " + error);
+        }
+    });
+}
+
+function deleteEvent(eventId) {
+    $.ajax({
+        url: '/deleteEvent/' + eventId,
+        method: 'POST',
+        contentType: 'application/json',
+        success: function(response) {
+            $('#event-' + eventId).remove();
+        },
+        error: function(xhr, status, error) {
+            console.error("Error: " + error);
+        }
+    });
+}
+
+function deleteSelectedEvent() {
+  $('.selected-event').each(function() {
+  var eventId = this.id.split('-')[1];
+  deleteEvent(eventId);
+  });
+}
+
+function modifySelectedEvent() {
+  // 선택된 일정을 확인합니다.
+  var selectedEvents = $('.selected-event');
+
+  if (selectedEvents.length === 0) {
+    alert('수정할 일정을 선택하세요.');
+    return;
+  }
+
+  // 수정할 일정의 ID를 배열에 저장합니다.
+  var eventIds = [];
+  var eventDescriptions = [];
+  selectedEvents.each(function() {
+    var eventId = this.id.split('-')[1];
+    eventIds.push(eventId);
+    var eventDescription = this.innerText.split(': ')[1];
+    eventDescriptions.push(eventDescription);
+  });
+
+  // 선택된 일정 아래에 폼을 추가합니다.
+  selectedEvents.each(function() {
+    var eventId = this.id.split('-')[1];
+    var eventDescription = this.innerText.split(': ')[1];
+    var eventElement = $(this);
+
+    // 수정 폼을 생성합니다.
+    var modifyForm = $('<div>');
+    modifyForm.append('<label for="newEventDescription">새로운 일정 설명:</label>');
+    modifyForm.append('<input type="text" id="newEventDescription" class="form-control">');
+
+    // 수정 버튼을 생성하고 클릭 이벤트를 등록합니다.
+    var modifyButton = $('<button class="btn btn-primary">수정</button>');
+    modifyButton.click(function() {
+       var newEventDescription = $('#newEventDescription').val();
+        var data = { eventDescription: newEventDescription };
+
+       $.ajax({
+         url: '/modifyEvent/' + eventId,
+         method: 'POST',
+         contentType: 'application/json',
+         data: JSON.stringify(data),
+         success: function(response) {
+           eventElement.text(newEventDescription);
+           modifyForm.remove();
+         },
+         error: function(xhr, status, error) {
+           console.error('Error: ' + error);
+         }
+       });
+     });
+
+
+    // 취소 버튼을 생성하고 클릭 이벤트를 등록합니다.
+    var cancelButton = $('<button class="btn btn-secondary">취소</button>');
+    cancelButton.click(function() {
+      modifyForm.remove();
     });
 
+    modifyForm.append(modifyButton);
+    modifyForm.append(cancelButton);
+
+    // 수정 폼을 일정 아래에 추가합니다.
+    eventElement.append(modifyForm);
+
+    // 수정 폼에 기존 일정 설명을 표시합니다.
+    $('#newEventDescription').val(eventDescriptions[0]);  });
 }
+
+
+
 </script>
 
 </body>

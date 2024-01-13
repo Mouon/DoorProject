@@ -1,7 +1,7 @@
-package moon.hellomoon.service;
+package moon.hellomoon.service.member;
 
 import moon.hellomoon.domain.Member;
-import moon.hellomoon.repository.MemberRepository;
+import moon.hellomoon.repository.repositoryInterface.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +24,9 @@ public class MemberService {
     }
 
     /**
-    * 회원 가입
-    * */
-    public Long join(Member member){
+     * 회원 가입
+     */
+    public Long join(Member member) {
         //커맨드 옵션 브이
         //NULL 같은거 안전하게 하려면 Optional로 감싸기!
         String encodedPassword = passwordEncoder.encode(member.getPassword());
@@ -36,13 +36,21 @@ public class MemberService {
         return member.getId();
     }
 
-    private void validateDuplicateMember(Member member) {
-        memberRepository.findByName(member.getName())
-            .ifPresent(m -> {
-            throw new IllegalStateException("이미 존재하는 회원입니다.");
-        });
+    public void deleteMember(Long memberId) {
+        Optional<Member> member = memberRepository.findById(memberId);
+        member.ifPresent(memberRepository::delete);
     }
 
+
+    private void validateDuplicateMember(Member member) {
+        memberRepository.findByName(member.getName())
+                .ifPresent(m -> {
+                    throw new IllegalStateException("이미 존재하는 회원입니다.");
+                });
+    }
+
+    // 이제 member 변수에 실제 Member 엔티티가 저장됩니다.
+    // 이 엔티티를 수정하거나 사용할 수 있습니다.
     public boolean changePassword(String email, String oldPassword, String newPassword) {
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
         if (optionalMember.isPresent()) {
@@ -54,6 +62,15 @@ public class MemberService {
                 return true;
             }
         }
+        return false;
+    }
+
+    public boolean checkPassword(long id, String password) {
+        Optional<Member> optionalMember = memberRepository.findById(id);
+        if (optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+            return passwordEncoder.matches(password, member.getPassword());
+            }
         return false;
     }
 
