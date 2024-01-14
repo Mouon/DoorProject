@@ -1,6 +1,6 @@
 package moon.hellomoon.service.board;
 
-import moon.hellomoon.dto.BoardForm;
+import moon.hellomoon.dto.Board.BoardWriteRequest;
 import moon.hellomoon.repository.repositoryInterface.BoardRepository;
 import moon.hellomoon.domain.Board;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +16,11 @@ public class BoardWriteService {
         this.boardRepository = boardRepository;
     }
 
-    public void insertBoard(BoardForm boardForm) throws Exception {
+    public void insertBoard(BoardWriteRequest boardWriteRequest) throws Exception {
         Board board = new Board();
-        board.setMemberId(boardForm.getMemberId());
-        board.setTitle(boardForm.getTitle());
-        board.setContent(boardForm.getContent());
+        board.setMemberId(boardWriteRequest.getMemberId());
+        board.setTitle(boardWriteRequest.getTitle());
+        board.setContent(boardWriteRequest.getContent());
         boardRepository.save(board);
     }
 }

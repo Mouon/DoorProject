@@ -1,7 +1,7 @@
 package moon.hellomoon.service.board;
 
 import moon.hellomoon.domain.Board;
-import moon.hellomoon.dto.BoardForm;
+import moon.hellomoon.dto.Board.BoardDetailResponse;
 import moon.hellomoon.repository.repositoryInterface.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +15,10 @@ public class BoardDetailService {
         this.boardRepository = boardRepository;
     }
 
-    public BoardForm detail(Long id) throws Exception{
+    public BoardDetailResponse detail(Long id) throws Exception{
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new Exception("게시글을 찾을 수 없습니다."));
-        BoardForm boardForm = new BoardForm(board.getId(), board.getMemberId(), board.getTitle(), board.getContent());
-        return boardForm;
+        BoardDetailResponse boardDetailResponse = new BoardDetailResponse(board.getId(), board.getMemberId(), board.getTitle(), board.getContent());
+        return boardDetailResponse;
     }
 }

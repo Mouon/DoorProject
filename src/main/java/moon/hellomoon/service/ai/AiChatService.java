@@ -14,7 +14,7 @@ public class AiChatService {
     private String OPEN_AI_KEY;
 
     @Autowired
-    private SystemMessageService systemMessageService;
+    private AiSystemMessageService aiSystemMessageService;
 
     public ResponseEntity<String> ask(Map<String, String> prompt) {
         RestTemplate restTemplate = new RestTemplate();
@@ -24,7 +24,7 @@ public class AiChatService {
          * JSON.stringify({ personality: personality, prompt: message })로 크라이언트가 메세지 보내면 personality로 value값 뽑아서
          * systemMessage에 넣고 new JSONObject().put("role", "system").put("content", systemMessage)이걸로 성격 주입
          * */
-        String systemMessage = systemMessageService.getSystemMessage(prompt.get("personality"));
+        String systemMessage = aiSystemMessageService.getSystemMessage(prompt.get("personality"));
 
         // OpenAI 요청 본문 구성
         JSONObject body = new JSONObject();

@@ -29,5 +29,9 @@ public class HomeController {
         return "service/drawCode";
     }
 
+    @GetMapping("/members/new")
+    public String createForm(){
+        return "members/createMemberForm";
+    }
 
 }

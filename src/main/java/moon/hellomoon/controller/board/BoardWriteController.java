@@ -1,21 +1,21 @@
 package moon.hellomoon.controller.board;
 
-import moon.hellomoon.dto.BoardForm;
+import moon.hellomoon.dto.Board.BoardWriteRequest;
 import moon.hellomoon.service.board.BoardWriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-public class WriteController {
+public class BoardWriteController {
 
     private final BoardWriteService boardWriteService;
 
     @Autowired
-    public WriteController(BoardWriteService boardWriteService){
+    public BoardWriteController(BoardWriteService boardWriteService){
         this.boardWriteService=boardWriteService;
     }
 
@@ -24,8 +24,8 @@ public class WriteController {
         return "community/write";
     }
     @PostMapping("/board-post")
-    public String writeBoard(@ModelAttribute("boardForm") BoardForm boardForm) throws Exception{
-        boardWriteService.insertBoard(boardForm);
+    public String writeBoard(@ModelAttribute("boardWriteRequest") BoardWriteRequest boardWriteRequest) throws Exception{
+        boardWriteService.insertBoard(boardWriteRequest);
         return "redirect:/board/board-list";
     }
 }

@@ -4,10 +4,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import moon.hellomoon.domain.Member;
 import moon.hellomoon.repository.repositoryInterface.MemberRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class JpaMemberRepository implements MemberRepository {
 
     private final EntityManager em;

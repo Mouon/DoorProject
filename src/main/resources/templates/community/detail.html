@@ -37,18 +37,17 @@
 </head>
 <body>
 <div class="container">
-    <div th:replace="navbar :: navbar"></div>
 
     <div class="header">
         <h1>게시글 상세 페이지</h1>
     </div>
 
     <div class="article-details">
-        <h2 th:text="${boardForm.title}">게시글 제목</h2>
+        <h2 th:text="${boardDetailResponse.title}">게시글 제목</h2>
         <p class="meta">
-            <span th:text="${boardForm.date}">게시 날짜</span>
+            <span th:text="${boardDetailResponse.date}">게시 날짜</span>
         </p>
-        <div class="content" th:text="${boardForm.content}">
+        <div class="content" th:text="${boardDetailResponse.content}">
             게시글 내용
         </div>
     </div>

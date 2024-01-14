@@ -5,7 +5,8 @@ import moon.hellomoon.domain.Member;
 import moon.hellomoon.dto.diary.DiaryModifyRequest;
 import moon.hellomoon.repository.repositoryInterface.DiaryRepository;
 import moon.hellomoon.repository.repositoryInterface.MemberRepository;
-import moon.hellomoon.service.diary.DiaryService;
+import moon.hellomoon.service.diary.DiaryInsertService;
+import moon.hellomoon.service.diary.DiaryManageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -14,17 +15,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 @RestController
 @Slf4j
-public class DiaryModifyDeleteController {
+public class DiaryManageController {
 
     private final MemberRepository memberRepository;
 
-    private final DiaryService diaryService;
-    private final DiaryRepository diaryRepository;
-
-    public DiaryModifyDeleteController(DiaryService diaryService, MemberRepository memberRepository, DiaryRepository diaryRepository){
-        this.diaryService=diaryService;
+    private final DiaryManageService diaryManageService;
+    public DiaryManageController(MemberRepository memberRepository, DiaryManageService diaryManageService){
+        this.diaryManageService = diaryManageService;
         this.memberRepository=memberRepository;
-        this.diaryRepository=diaryRepository;
     }
 
     @PostMapping("/deleteEvent/{eventId}")
@@ -35,7 +33,7 @@ public class DiaryModifyDeleteController {
             Member member = memberRepository.findByEmail(userDetails.getUsername())
                     .orElseThrow(() -> new RuntimeException("Member not found"));
         }
-        diaryService.deleteEvent(eventId);
+        diaryManageService.deleteEvent(eventId);
         return ResponseEntity.ok().build();
     }
 
@@ -53,7 +51,7 @@ public class DiaryModifyDeleteController {
                     .orElseThrow(() -> new RuntimeException("Member not found"));
         }
         String newEventDescription = diaryModifyRequest.getEventDescription();
-        diaryService.modifyEvent(eventId,newEventDescription);
+        diaryManageService.modifyEvent(eventId,newEventDescription);
         return ResponseEntity.ok().build();
     }
 

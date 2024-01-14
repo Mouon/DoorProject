@@ -4,10 +4,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import moon.hellomoon.domain.Board;
 import moon.hellomoon.repository.repositoryInterface.BoardRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class JpaBoardRepository implements BoardRepository {
     private final EntityManager em;
 

@@ -50,7 +50,7 @@ public class Diary {
     }
 
     public void setEventDescription(String eventDescription) {
-        eventDescription = eventDescription;
+        this.eventDescription = eventDescription;
     }
 
     public String getCreateDate() {

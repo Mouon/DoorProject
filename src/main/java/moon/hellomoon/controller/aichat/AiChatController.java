@@ -1,7 +1,7 @@
 package moon.hellomoon.controller.aichat;
 
 import moon.hellomoon.service.ai.AiChatService;
-import moon.hellomoon.service.ai.SystemMessageService;
+import moon.hellomoon.service.ai.AiSystemMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,16 +12,16 @@ import java.util.Map;
 @RestController
 public class AiChatController {
     private final AiChatService aiChatService;
-    private final SystemMessageService systemMessageService;
+    private final AiSystemMessageService aiSystemMessageService;
 
     @Autowired
-    public AiChatController(AiChatService aiChatService, SystemMessageService systemMessageService) {
+    public AiChatController(AiChatService aiChatService, AiSystemMessageService aiSystemMessageService) {
         this.aiChatService = aiChatService;
-        this.systemMessageService = systemMessageService;
+        this.aiSystemMessageService = aiSystemMessageService;
     }
 
     public ResponseEntity<Map<String, String>> getSystemMessages() {
-        Map<String, String> systemMessages = systemMessageService.getSystemMessageKeys();
+        Map<String, String> systemMessages = aiSystemMessageService.getSystemMessageKeys();
         return ResponseEntity.ok(systemMessages);
     }
 

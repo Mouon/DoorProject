@@ -50,6 +50,12 @@ $(document).ready(function() {
 function addEvent() {
     var date = $('#eventDate').val();
     var description = $('#eventDescription').val();
+    console.log("Sending eventDescription:", description);
+
+    if (!description.trim()) {
+        alert("이벤트 설명을 입력해 주세요.");
+        return;
+    }
 
     $.ajax({
         url: '/addEvent',

@@ -4,13 +4,12 @@ import moon.hellomoon.domain.Diary;
 import moon.hellomoon.domain.Member;
 import moon.hellomoon.repository.repositoryInterface.DiaryRepository;
 import moon.hellomoon.repository.repositoryInterface.MemberRepository;
-import moon.hellomoon.service.diary.DiaryService;
+import moon.hellomoon.service.diary.DiaryInsertService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,11 +21,11 @@ import java.util.List;
 public class DiaryInquiryController {
     private final MemberRepository memberRepository;
 
-    private final DiaryService diaryService;
+    private final DiaryInsertService diaryInsertService;
     private final DiaryRepository diaryRepository;
 
-    public DiaryInquiryController(DiaryService diaryService,MemberRepository memberRepository,DiaryRepository diaryRepository){
-        this.diaryService=diaryService;
+    public DiaryInquiryController(DiaryInsertService diaryInsertService, MemberRepository memberRepository, DiaryRepository diaryRepository){
+        this.diaryInsertService = diaryInsertService;
         this.memberRepository=memberRepository;
         this.diaryRepository=diaryRepository;
     }

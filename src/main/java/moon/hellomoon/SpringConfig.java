@@ -28,26 +28,7 @@ public class SpringConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public MemberService memberService(){
-        return new MemberService(memberRepository(),passwordEncoder());
-    }
 
-    @Bean
-    public BoardWriteService boardWriteService(){return new BoardWriteService(boardRepository());}
-    @Bean
-    public MemberRepository memberRepository(){
-        return new JpaMemberRepository(em);
-    }
-
-    @Bean
-    public BoardRepository boardRepository(){return new JpaBoardRepository(em);
-    }
-
-    @Bean
-    public DiaryRepository diaryRepository(){
-        return new JpaDiaryRepository(em);
-    }
 
 //    /**
 //     * 컴포넌트 어노테이션 써두 되지만 이렇게 명시적으로 AOP쓰는것 알려줘두 좋음

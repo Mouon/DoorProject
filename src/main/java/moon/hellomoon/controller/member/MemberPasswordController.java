@@ -1,4 +1,4 @@
-package moon.hellomoon.controller;
+package moon.hellomoon.controller.member;
 
 import moon.hellomoon.service.member.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class PasswordController {
+public class MemberPasswordController {
 
     private final MemberService memberService;
 
     @Autowired
-    public PasswordController(MemberService memberService) {
+    public MemberPasswordController(MemberService memberService) {
         this.memberService = memberService;
     }
 
