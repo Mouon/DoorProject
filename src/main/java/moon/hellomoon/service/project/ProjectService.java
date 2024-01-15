@@ -44,5 +44,8 @@ public class ProjectService {
         return projectRepository.findAll();
     }
 
+    public List<Project> getProjectsByUser(Long userId){
+        return projectRepository.findByUser(userId);
+    }
 
 }

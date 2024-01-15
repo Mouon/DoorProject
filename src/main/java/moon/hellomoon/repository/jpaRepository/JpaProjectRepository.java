@@ -1,6 +1,7 @@
 package moon.hellomoon.repository.jpaRepository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import moon.hellomoon.domain.Member;
 import moon.hellomoon.domain.Project;
@@ -26,6 +27,16 @@ public class JpaProjectRepository {
         em.persist(project);
         return project;
     }
+
+    public List<Project> findByUser(Long userId) {
+        Member member = em.find(Member.class, userId);
+        String jpql = "SELECT p FROM Project p WHERE p.member = :member";
+        TypedQuery<Project> query = em.createQuery(jpql, Project.class);
+        query.setParameter("member", member);
+
+        return query.getResultList();
+    }
+
 
     public List<Project> findAll() {
         return (List<Project>) em.createQuery("select p from Project p",Project.class)

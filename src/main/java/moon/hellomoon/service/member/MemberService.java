@@ -74,6 +74,20 @@ public class MemberService {
         return false;
     }
 
+    public Member getMemberByUsername(String username) {
+        // 사용자 이름(username)을 기반으로 해당 사용자를 조회합니다.
+        Optional<Member> member = memberRepository.findByName(username);
+
+        // 사용자를 찾았을 경우에만 반환합니다.
+        if (member.isPresent()) {
+            return member.get();
+        } else {
+            // 사용자를 찾지 못한 경우 예외를 던지거나 다른 처리를 수행할 수 있습니다.
+            // 이 예제에서는 예외를 던지도록 하겠습니다.
+            throw new RuntimeException("User not found with username: " + username);
+        }
+    }
+
     public List<Member> findMembers(){
         return memberRepository.findAll();
     }
