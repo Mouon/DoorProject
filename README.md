@@ -13,7 +13,8 @@ Moon 프로젝트는 개인 프로젝트로, AI 채팅 기능과 로그인/로�
 - OpenAI API
 
 ## 프로젝트 설명
-<img width="1511" alt="스크린샷 2024-01-15 오후 12 25 51" src="https://github.com/Mouon/MoonProjetx/assets/137624597/a0f4c94d-78e7-4a22-8f21-99d05ebb76f5">
+<img width="1624" alt="스크린샷 2024-01-16 오전 1 34 45" src="https://github.com/Mouon/MoonProjetx/assets/137624597/dfccf5ef-9c02-4886-873e-30a65f63035e">
+
 
 이 프로젝트는 다음과 같은 기능과 설정을 포함하고 있습니다:
 
@@ -32,7 +33,11 @@ Moon 프로젝트는 개인 프로젝트로, AI 채팅 기능과 로그인/로�
 - 회원탈퇴: 사용자가 회원으로 탈퇴할 수 있도록 회원가입 기능을 제공합니다.
 
 - 프로젝트 커뮤니티: 자신의 프로젝트를 주요 기술과 함께 게시할 수 있습니다.
-<img width="1512" alt="스크린샷 2024-01-15 오후 11 13 08" src="https://github.com/Mouon/MoonProjetx/assets/137624597/8ab30f79-5aa4-4a95-bbb9-b34814d44780">
+  <img width="1624" alt="스크린샷 2024-01-16 오전 1 35 00" src="https://github.com/Mouon/MoonProjetx/assets/137624597/c8423cde-8450-48d3-9720-eabf9d56993f">
+내 프로젝트도 모아볼 수 있습니다.
+<img width="1512" alt="스크린샷 2024-01-15 오후 11 13 08" src="https://github.com/Mouon/MoonProjetx/assets/137624597/f58ab9ba-b5ef-4346-8d22-d0c20049c740">
+
+
 
 
 -   데이터베이스: 기반은 MySQL이며, JPA를 사용하여 데이터를 관리하고있습니다.
