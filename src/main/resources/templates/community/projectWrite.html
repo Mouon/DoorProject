@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Creation</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>Create a New Project</h2>
+  <form id="project-creation-form">
+    <div class="form-group">
+      <label for="project-github">GitHub Repository URL:</label>
+      <input type="url" class="form-control" id="project-github" name="project_github" required>
+    </div>
+    <div class="form-group">
+      <label for="project-title">Project Title:</label>
+      <input type="text" class="form-control" id="project-title" name="project_title" required>
+    </div>
+    <div class="form-group">
+      <label for="project-description">Project Description:</label>
+      <textarea class="form-control" id="project-description" name="project_description" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="project-tags">Select Tags (use Ctrl to select multiple):</label>
+      <select class="form-control" id="project-tags" name="project_tags" multiple>
+        <option value="Spring">Spring</option>
+        <option value="Django">Django</option>
+        <option value="React">React</option>
+        <option value="Android Studio">Android Studio</option>
+        <option value="Kotlin">Kotlin</option>
+        <option value="JAVA">JAVA</option>
+        <option value="Python">Python</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Create Project</button>
+  </form>
+</div>
+
+<!-- Include JS files here, e.g., jQuery, Bootstrap JS, etc. -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+  // Form submission event listener
+  document.getElementById('project-creation-form').addEventListener('submit', function(e) {
+    e.preventDefault(); // 기본 폼 제출 방지
+
+    // 폼 데이터 수집
+    const github = document.getElementById('project-github').value;
+    const title = document.getElementById('project-title').value;
+    const description = document.getElementById('project-description').value;
+    const tagsSelect = document.getElementById('project-tags');
+    const tagsArray = Array.from(tagsSelect.selectedOptions).map(option => option.value);
+
+    // AJAX 요청 객체 생성
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/projects', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    // 요청 완료 처리
+    xhr.onload = function() {
+      if (this.status === 200) {
+        // 성공적으로 처리되었을 때의 로직
+        console.log(this.responseText);
+        window.location.href = '/'; // 메인 페이지로 리다이렉트
+      } else {
+        // 오류 처리
+        console.error('An error occurred:', this.statusText);
+      }
+    };
+
+    // 요청 데이터 생성
+    const requestData = JSON.stringify({
+      githubAddress: github,
+      title: title,
+      content: description,
+      tags: tagsArray
+      // 기타 필요한 데이터
+    });
+
+    // 요청 전송
+    xhr.send(requestData);
+  });
+</script>
+</body>
+</html>

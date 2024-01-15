@@ -81,3 +81,43 @@ a:hover {
     border-color: #ced4da;
     padding: .75rem 1rem;
 }
+        .header h1 {
+            margin: 0;
+            padding: 0 20px;
+            font-weight: bold;
+        }
+        .nav-bar-custom {
+            padding: 10px 0;
+        }
+        .news-section {
+            background: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .news-section h5 {
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .news-item {
+            margin-bottom: 15px;
+        }
+        .footer {
+            background: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .card {
+            width: 100%; /* 크기 조정 */
+            margin-bottom: 10px; /* 마진 조정 */
+        }
+        .card .btn-primary {
+            background-color: white;
+            color: black;
+            border: 1px solid #ccc;
+        }
+        #bookmarksList {
+            justify-content: center; /* 가운데 정렬 */
+        }
