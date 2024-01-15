@@ -32,7 +32,6 @@ public class BookmarksListController {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             Member member = memberRepository.findByEmail(userDetails.getUsername())
                     .orElseThrow(() -> new RuntimeException("Member not found"));
-            LocalDate currentDate = LocalDate.now();
             List<Bookmarks> bookmarks = bookmarkRepository.findByMemberId(member.getId());
             return ResponseEntity.ok(bookmarks);
         } else {
