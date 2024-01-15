@@ -34,6 +34,14 @@ public class AiChatAdviceController {
         this.diaryRepository = diaryRepository;
     }
 
+    /**
+     * prompt 는 맵으로 선언하고
+     * prompt.put("prompt", firstEvent.getEventDescription()); 이걸로 prompt 키 값의
+     * value 로 events 의 첫번째 일정 설명 저장
+     * aiAdviceService.ask(prompt)로 질문 전달
+     * ask 가 파라매터를 맵으로 받음
+     * 그건 gpt api 에서 정해준거
+     * */
     @PostMapping("/aiAdvice")
     public ResponseEntity<String> advice() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -53,7 +61,6 @@ public class AiChatAdviceController {
             }
 
         }else {
-            // 인증되지 않은 경우 처리
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
