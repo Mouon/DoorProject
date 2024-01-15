@@ -1,4 +1,4 @@
-<img width="1511" alt="스크린샷 2024-01-15 오후 12 25 51" src="https://github.com/Mouon/MoonProjetx/assets/137624597/b9f8a26b-f865-47f4-a81e-d260b92cc10e"># Moon 프로젝트
+# Moon 프로젝트
 
 Moon 프로젝트는 개인 프로젝트로, AI 채팅 기능과 로그인/로그아웃, 회원가입/탈퇴, 일정관리 등을 구현한 웹 애플리케이션입니다.
 
