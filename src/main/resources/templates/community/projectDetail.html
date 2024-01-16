@@ -8,35 +8,55 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom CSS -->
   <style>
-        /* Add your custom styles here */
-        .project-info {
-            margin: 20px;
-        }
-        .project-info h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .project-info .tag {
-            display: inline-block;
-            background-color: #000;
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 15px;
-            margin-right: 5px;
-            font-size: 12px;
-        }
-    </style>
+    /* Add your custom styles here */
+    .project-info {
+        margin: 20px;
+    }
+    .project-info h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .project-info .tag {
+        display: inline-block;
+        background-color: #000;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 15px;
+        margin-right: 5px;
+        font-size: 12px;
+    }
+    body, html {
+    height: 100%;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
   <div class="project-info">
     <h1 class="display-4" th:text="${projectDetailResponse.title}"></h1>
-    <p class="lead">주요 기술:</p>
+
+    <p class="lead">주요 기술</p>
     <span th:each="tag : ${projectDetailResponse.tags}" class="tag" th:text="${tag}"></span>
+
     <p class="lead" th:text="${projectDetailResponse.content}"></p>
-    <p><a class="btn btn-primary" href="#" role="button">프로젝트 개발자가 직접 작성한 후기 글 보러 가기</a></p>
+
+    <p th:if="${projectDetailResponse.githubAddress}">
+      <a th:href="${projectDetailResponse.githubAddress}" class="btn btn-outline-dark" target="_blank" role="button">GitHub Repository</a>
+    </p>
+
+    <p>
+      <a class="btn btn-outline-dark" href="#" role="button">프로젝트 개발자가 직접 작성한 후기 글 보러 가기</a>
+    </p>
   </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>

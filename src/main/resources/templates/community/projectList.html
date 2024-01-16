@@ -178,7 +178,7 @@
 </nav>
 
 <div class="container" id="projects-container">
-  <div th:each="project : ${projects}" class="card">
+  <div th:each="project : ${projects}" class="card" th:attr="data-project-id=${project.id}" th:onclick="'goToProjectDetail(' + ${project.id} + ')'" style="cursor: pointer;">
     <div class="card-body">
       <h5 class="card-title" th:text="${project.title}"></h5>
       <p class="card-text" th:text="${project.content}"></p>
@@ -204,7 +204,10 @@
     projects.forEach(project => {
       const card = document.createElement('div');
       card.className = 'card';
-
+      card.addEventListener('click', function() {
+            const projectId = this.getAttribute('data-project-id');
+            window.location.href = '/project-detail/' + projectId;
+      });
 
       const cardBody = document.createElement('div');
       cardBody.className = 'card-body';
@@ -264,8 +267,13 @@
     // Redirect the user to the /write-project URL
     window.location.href = '/write-project';
   });
-// Event listener to create cards on DOM content loaded
 document.addEventListener('DOMContentLoaded', createProjectCards);
+
+
+    function goToProjectDetail(projectId) {
+        // Redirect the user to the /project-detail/{id} URL when the card is clicked
+        window.location.href = '/project-detail/' + projectId;
+    }
 </script>
 
 </html>

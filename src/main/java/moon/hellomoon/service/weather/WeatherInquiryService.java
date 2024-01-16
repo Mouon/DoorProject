@@ -25,7 +25,7 @@ public class WeatherInquiryService {
     }
 
     public String getWeatherData(Integer stnIds, String startDt, String startHh, String endDt, String endHh) {
-        String baseUrl = "http://apis.data.go.kr/1360000/AsosHourlyInfoService/getWthrDataList?ServiceKey="+ serviceKey;
+        String baseUrl = "http://apis.data.go.kr/1360000/AsosHourlyInfoService/getWthrDataList?ServiceKey="+serviceKey;
 
         URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl)
                 .queryParam("numOfRows", "10")
