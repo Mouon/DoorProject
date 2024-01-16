@@ -187,7 +187,7 @@
       </div>
     </div>
     <div class="card-footer">
-      <a th:href="${project.githubAddress}" target="_blank">GitHub Repository</a>
+      <a th:href="${project.githubAddress}" target="_blank" th:text="${#strings.arraySplit(project.githubAddress, '/')[2]}">GitHub Repository</a>
     </div>
   </div>
 </div>
@@ -274,6 +274,8 @@ document.addEventListener('DOMContentLoaded', createProjectCards);
         // Redirect the user to the /project-detail/{id} URL when the card is clicked
         window.location.href = '/project-detail/' + projectId;
     }
+
+
 </script>
 
 </html>
