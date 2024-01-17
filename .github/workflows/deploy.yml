@@ -48,7 +48,7 @@ jobs:
       - name: Docker Hub build & push
         run: |
           docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PWD }}
-          docker build --build-arg OPEN_AI_KEY=${{ secrets.OPEN_AI_KEY }} -t chatdiary/chatdiary-image:latest .
+          docker build --build-arg OPEN_AI_KEY=${{ secrets.OPEN_AI_KEY }} -t mouon/mouonprojectx:tagname .
           docker images
           docker push mouon/mouonprojectx:tagname
 
