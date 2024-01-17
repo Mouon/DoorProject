@@ -33,9 +33,13 @@ Moon 프로젝트는 개인 프로젝트로, AI 채팅 기능과 로그인/로�
 - 회원탈퇴: 사용자가 회원으로 탈퇴할 수 있도록 회원가입 기능을 제공합니다.
 
 - 프로젝트 커뮤니티: 자신의 프로젝트를 주요 기술과 함께 게시할 수 있습니다. [기술 태그 기능]
-  <img width="1624" alt="스크린샷 2024-01-16 오전 1 35 00" src="https://github.com/Mouon/MoonProjetx/assets/137624597/c8423cde-8450-48d3-9720-eabf9d56993f">
-내 프로젝트도 모아볼 수 있습니다.
-  <img width="1624" alt="스크린샷 2024-01-16 오전 1 34 56" src="https://github.com/Mouon/MoonProjetx/assets/137624597/2c966d78-d855-4f1b-b428-5ab99a9f0ab4">
+<img width="1624" alt="스크린샷 2024-01-17 오전 10 37 18" src="https://github.com/Mouon/MoonProjetx/assets/137624597/146aa77c-fb86-4be9-9d75-cc995a41a516">
+
+<img width="1624" alt="스크린샷 2024-01-17 오전 10 37 31" src="https://github.com/Mouon/MoonProjetx/assets/137624597/e83f089a-a2f2-4fc6-a6f6-9a5a167d82fe">
+
+내 프로젝트만 모아볼 수 있습니다.
+<img width="1624" alt="스크린샷 2024-01-17 오전 10 37 22" src="https://github.com/Mouon/MoonProjetx/assets/137624597/7986239f-3e90-4e99-bd27-610e10a7da71">
+
 
 
 
