@@ -1,14 +1,6 @@
 package moon.hellomoon;
 
 import jakarta.persistence.EntityManager;
-import moon.hellomoon.repository.jpaRepository.JpaBoardRepository;
-import moon.hellomoon.repository.jpaRepository.JpaDiaryRepository;
-import moon.hellomoon.repository.jpaRepository.JpaMemberRepository;
-import moon.hellomoon.repository.repositoryInterface.BoardRepository;
-import moon.hellomoon.repository.repositoryInterface.DiaryRepository;
-import moon.hellomoon.repository.repositoryInterface.MemberRepository;
-import moon.hellomoon.service.member.MemberService;
-import moon.hellomoon.service.board.BoardWriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

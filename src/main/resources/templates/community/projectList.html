@@ -141,6 +141,23 @@
     .navbar-custom .nav-link:hover {
       color: #0056b3; /* Color change on hover */
     }
+    /* 태그 버튼 스타일 */
+    .tag-btn {
+        display: inline-block;
+        background-color: #000; /* 검은색 배경 */
+        color: #fff; /* 흰색 텍스트 */
+        padding: 5px 10px; /* 패딩 */
+        border-radius: 15px; /* 둥근 모서리 */
+        margin-right: 5px; /* 오른쪽 여백 */
+        font-size: 12px; /* 폰트 크기 */
+        border: none; /* 테두리 없음 */
+        cursor: pointer; /* 커서 스타일 */
+    }
+
+    /* 태그 버튼 호버 스타일 */
+    .tag-btn:hover {
+        background-color: #333; /* 호버 시 배경색 변경 */
+    }
   </style>
 </head>
 <body>
@@ -161,22 +178,25 @@
         <li class="nav-item"><a href="/members" class="nav-link">Members List</a></li>
         <li class="nav-item"><a href="/members/member-detail" class="nav-link">Member Info</a></li>
       </ul>
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            More
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="/aichat">AI Chat</a>
-            <a class="dropdown-item" href="/diary">My Diary</a>
-            <!-- More dropdown items -->
-          </div>
-        </li>
-      </ul>
     </div>
   </div>
 </nav>
-
+<div class="navbar navbar-expand-lg navbar-light nav-bar-custom">
+  <div class="container">
+    <div id="tag-filter" class="tag-list">
+      <button class="tag-btn" onclick="fetchProjectsByTag('All')">All</button>
+      <button class="tag-btn" onclick="fetchProjectsByTag('Java')">Java</button>
+      <button class="tag-btn" onclick="fetchProjectsByTag('JavaScript')">JavaScript</button>
+      <button class="tag-btn" onclick="fetchProjectsByTag('Django')">Django</button>
+      <button class="tag-btn" onclick="fetchProjectsByTag('React')">React</button>
+      <button class="tag-btn" onclick="fetchProjectsByTag('Android Studio')">Android Studio</button>
+      <button class="tag-btn" onclick="fetchProjectsByTag('Kotlin')">Kotlin</button>
+      <button class="tag-btn" onclick="fetchProjectsByTag('Go')">Go</button>
+      <button class="tag-btn" onclick="fetchProjectsByTag('Spring')">Spring</button>
+      <button class="tag-btn" onclick="fetchProjectsByTag('Python')">Python</button>
+    </div>
+  </div>
+</div>
 <div class="container" id="projects-container">
   <div th:each="project : ${projects}" class="card" th:attr="data-project-id=${project.id}" th:onclick="'goToProjectDetail(' + ${project.id} + ')'" style="cursor: pointer;">
     <div class="card-body">
@@ -197,86 +217,105 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script>
-
-  function createProjectCards() {
+function createProjectCards(projects) {
     const container = document.getElementById('projects-container');
+    container.innerHTML = ''; // 기존 내용을 지웁니다.
 
     projects.forEach(project => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.addEventListener('click', function() {
-            const projectId = this.getAttribute('data-project-id');
-            window.location.href = '/project-detail/' + projectId;
-      });
+        const card = document.createElement('div');
+        card.className = 'card';
 
-      const cardBody = document.createElement('div');
-      cardBody.className = 'card-body';
+        const cardBody = document.createElement('div');
+        cardBody.className = 'card-body';
 
-      const title = document.createElement('h5');
-      title.className = 'card-title';
-      title.textContent = project.title;
-      cardBody.appendChild(title);
+        const title = document.createElement('h5');
+        title.className = 'card-title';
+        title.textContent = project.title;
+        cardBody.appendChild(title);
 
-      const description = document.createElement('p');
-      description.className = 'card-text';
-      if (project.description.length > 40) {
-        // If it is, trim the description to 40 characters and add an ellipsis
-        description.textContent = project.description.substring(0, 40) + '...';
-      } else {
-        // If not, just use the description as is
-        description.textContent = project.description;
-      }
-      cardBody.appendChild(description);
-      const tagsDiv = document.createElement('div');
-      tagsDiv.className = 'card-tags';
-      project.tags.forEach(tag => {
-        const span = document.createElement('span');
-        span.className = 'tag';
-        span.textContent = tag;
-    tagsDiv.appendChild(span);
-  });
-  cardBody.appendChild(tagsDiv);
+        const description = document.createElement('p');
+        description.className = 'card-text';
+        description.textContent = project.content;
+        cardBody.appendChild(description);
 
-  card.appendChild(cardBody);
+        const tagsDiv = document.createElement('div');
+        tagsDiv.className = 'card-tags';
+        project.tags.forEach(tag => {
+            const span = document.createElement('span');
+            span.className = 'tag';
+            span.textContent = tag;
+            tagsDiv.appendChild(span);
+        });
+        cardBody.appendChild(tagsDiv);
 
-  const cardFooter = document.createElement('div');
-  cardFooter.className = 'card-footer';
+        // cardFooter 선언
+        const cardFooter = document.createElement('div');
+        cardFooter.className = 'card-footer';
 
-  const usernameSpan = document.createElement('span');
-  usernameSpan.className = 'username';
-  usernameSpan.textContent = project.username; // Replace with actual username
-  cardFooter.appendChild(usernameSpan);
+        if (project.githubAddress) {
+            const githubLink = document.createElement('a');
+            githubLink.setAttribute('href', project.githubAddress);
+            githubLink.setAttribute('target', '_blank');
+
+            // URL에서 호스트 이름 뒤의 첫 번째 경로 부분을 추출하여 표시
+            const urlParts = project.githubAddress.split('/');
+            if (urlParts.length > 2) {
+                githubLink.textContent = urlParts[3]; //
+            } else {
+                githubLink.textContent = 'GitHub Repository';
+            }
+
+            cardFooter.appendChild(githubLink);
+        }
 
 
+        card.appendChild(cardBody);
+        card.appendChild(cardFooter);
 
-  const viewsSpan = document.createElement('span');
-  viewsSpan.className = 'views';
-  viewsSpan.innerHTML = '<i class="fa fa-eye"></i>' + ' ' + project.views;
-  cardFooter.appendChild(viewsSpan);
-
-  card.appendChild(cardFooter);
-
-  container.appendChild(card);
-});
+        container.appendChild(card);
+    });
 }
-  // Select the button element by its id
-  const writeButton = document.getElementById('writeButton');
-
-  // Add a click event listener to the button
-  writeButton.addEventListener('click', function() {
-    // Redirect the user to the /write-project URL
-    window.location.href = '/write-project';
-  });
-document.addEventListener('DOMContentLoaded', createProjectCards);
 
 
-    function goToProjectDetail(projectId) {
-        // Redirect the user to the /project-detail/{id} URL when the card is clicked
-        window.location.href = '/project-detail/' + projectId;
+function fetchProjectsByTag(tagName) {
+    let url;
+    if (tagName === 'All') {
+        url = `http://localhost:9000/project/all`;
+    } else {
+        url = `http://localhost:9000/project/search-tag?tagName=${tagName}`;
     }
 
+    fetch(url)
+        .then(response => response.json())
+        .then(projects => {
+            createProjectCards(projects);
+        })
+        .catch(error => {
+            console.error('Error fetching projects:', error);
+        });
+}
 
+// 페이지 로드 완료시 실행되는 함수
+document.addEventListener('DOMContentLoaded', function() {
+    // 여기에서 초기 프로젝트 목록을 로드하는 로직을 추가할 수 있습니다.
+    // 예: createProjectCards(initialProjects);
+
+    // 태그 버튼에 대한 이벤트 리스너를 추가합니다.
+    document.querySelectorAll('.tag-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            const tagName = this.textContent;
+            fetchProjectsByTag(tagName);
+        });
+    });
+
+    // '글쓰러가기' 버튼에 대한 이벤트 리스너를 추가합니다.
+    const writeButton = document.getElementById('writeButton');
+    writeButton.addEventListener('click', function() {
+        window.location.href = '/write-project';
+    });
+});
 </script>
+
 
 </html>
 

@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -33,6 +34,8 @@ public class ProjectListController {
         return "community/projectList";
     }
 
+
+
     @GetMapping("/project-list/user")
     public String viewUserProjects(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -49,6 +52,8 @@ public class ProjectListController {
             return ResponseEntity.ok().toString();
         }
     }
+
+
 
 
 }

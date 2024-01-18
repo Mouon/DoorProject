@@ -1,344 +1,430 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:text-align="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome to Our Site!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Project List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
-        body {
-            background: #ffffff; /* Pure white background */
-            color: #333; /* Dark grey text for better readability */
-            padding-top: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
-        }
-
-        .header {
-            background: #f8f8f8; /* Lighter shade for the header */
-            color: #333;
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 이 부분은 카드의 최소 크기와 최대 크기를 정의합니다. */
+        gap: 20px;
+        padding: 20px;
+    }
+    .card {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+        padding: 15px;
+        height: 300px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    .card h3 {
+        margin: 15px 0 5px 0;
+        color: #333;
+    }
+    .card p {
+        color: #666;
+        line-height: 1.6;
+    }
+    .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 10px;
+    }
+    .footer .username {
+        color: #333;
+        font-weight: bold;
+    }
+    .footer .date {
+        font-size: 14px;
+    }
+    .card-img-top {
+      width: 100%;
+      height: 200px; /* 이미지 높이 설정 */
+      object-fit: cover; /* 이미지 비율 유지 */
+    }
+    .card-body {
+      padding: 15px;
+    }
+    .card-title {
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+    .card-text {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 15px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      display: block;
+      line-height: 1.4;
+      height: 2.8em;
+      margin-bottom: 15px;
+      width: 100%;
+      max-width: 100%;
+    }
+    .card-tags {
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .tag {
+      display: inline-block;
+      background-color: #000;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 15px;
+      margin-right: 5px;
+      font-size: 12px;
+    }
+    .card-footer {
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      background-color: #f8f9fa;
+      border-top: 1px solid #eeeeee;
+    }
+    .card-footer a {
+      color: #000; /* 검은색 텍스트 */
+      text-decoration: none; /* 밑줄 없앰 */
+    }
+    .username {
+      font-weight: bold;
+    }
+    .likes, .views {
+      display: flex;
+      align-items: center;
+    }
+    .fa-heart, .fa-eye {
+      margin-right: 5px;
+    }
+    .nav-bar-custom {
             padding: 10px 0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-        }
-
-        .nav-bar-custom {
-            background: #ffffff; /* Matching the white theme */
-            color: #333;
-            padding: 10px 0;
-            border-bottom: 1px solid #eaeaea; /* Light border for separation */
-        }
-
-        .news-section {
-            background: #ffffff;
-            margin-bottom: 20px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Lighter shadow for the cards */
-        }
-
-        .news-section h5 {
-            border-bottom: 1px solid #eaeaea;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            color: #333; /* Dark grey for headers */
-        }
-        .news-item {
-            margin-bottom: 15px;
-        }
-        .footer {
-            background: #333;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
-        .card {
-            width: 100%; /* 크기 조정 */
-            margin-bottom: 10px; /* 마진 조정 */
-        }
-        .card .btn-primary {
-            background-color: white;
-            color: black;
-            border: 1px solid #ccc;
-        }
-        #bookmarksList {
-            justify-content: center; /* 가운데 정렬 */
-        }
-</style>
+    }
+    .write-button {
+      position: fixed; /* 고정 위치 설정 */
+      bottom: 20px; /* 하단 여백 설정 */
+      right: 20px; /* 우측 여백 설정 */
+      background-color: #007bff; /* 버튼 배경색 설정 */
+      color: white; /* 버튼 텍스트 색상 설정 */
+      padding: 10px 20px; /* 버튼 내부 패딩 설정 */
+      border: none; /* 테두리 제거 */
+      border-radius: 5px; /* 버튼 모서리 둥글게 설정 */
+      cursor: pointer;
+    }
+    .navbar-custom {
+      background-color: #f8f9fa; /* Light grey background */
+      color: #343a40; /* Dark grey text */
+    }
+    .navbar-custom .navbar-brand,
+    .navbar-custom .nav-link {
+      color: #343a40; /* Dark grey text */
+    }
+    .navbar-custom .nav-link {
+      margin-right: 10px; /* Spacing between nav items */
+    }
+    .navbar-custom .nav-link:hover {
+      color: #0056b3; /* Color change on hover */
+    }
+    /* 태그 버튼 스타일 */
+    .tag-btn {
+        display: inline-block;
+        background-color: #000; /* 검은색 배경 */
+        color: #fff; /* 흰색 텍스트 */
+        padding: 5px 10px; /* 패딩 */
+        border-radius: 15px; /* 둥근 모서리 */
+        margin-right: 5px; /* 오른쪽 여백 */
+        font-size: 12px; /* 폰트 크기 */
+        border: none; /* 테두리 없음 */
+        cursor: pointer; /* 커서 스타일 */
+    }
+    .tag-btn:hover {
+        background-color: #333; /* 호버 시 배경색 변경 */
+    }
+    .chart-container {
+    display: flex;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional: adds a shadow for depth */
+    background-color: #fff; /* Matches the card color */
+    border-radius: 10px; /* Matches the card style */
+    margin-bottom: 20px;
+    }
+    .canvas-item {
+    margin: 10px; /* 캔버스 간 여백 설정 */
+    flex: 1; /* 캔버스들이 컨테이너 공간을 균등하게 차지하도록 설정 */
+    }
+  </style>
 </head>
 <body>
-
-<div class="container">
-
-    <!-- Header -->
-    <div class="header text-center">
-        <h1>MooSpring Times</h1>
+<nav class="navbar navbar-expand-lg navbar-light nav-bar-custom">
+    <div class="container">
+        <a class="navbar-brand" href="/">Moon</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/project-list" class="nav-link">Projects</a></li>
+                <li class="nav-item"><a href="/project-list/user" class="nav-link">My Projects</a></li>
+                <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                <li class="nav-item"><a href="/members/new" class="nav-link">Sign Up</a></li>
+                <li class="nav-item"><a href="/members" class="nav-link">Members List</a></li>
+                <li class="nav-item"><a href="/members/member-detail" class="nav-link">Member Info</a></li>
+            </ul>
+        </div>
     </div>
+</nav>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-bar-custom">
-        <div class="container">
-            <a class="navbar-brand" href="#">Moon</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"><a href="#" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="/project-list" class="nav-link">Projects</a></li>
-                    <li class="nav-item"><a href="/project-list/user" class="nav-link">My Projects</a></li>
-                    <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
-                    <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
-                    <li class="nav-item"><a href="/members/new" class="nav-link">Sign Up</a></li>
-                    <li class="nav-item"><a href="/members" class="nav-link">Members List</a></li>
-                    <li class="nav-item"><a href="/members/member-detail" class="nav-link">Member Info</a></li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            More
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/aichat">AI Chat</a>
-                            <a class="dropdown-item" href="/diary">My Diary</a>
-                            <!-- More dropdown items -->
-                        </div>
-                    </li>
-                </ul>
+<div class="container" id="projects-container">
+    <div th:each="project : ${projects}" class="card" th:attr="data-project-id=${project.id}" th:onclick="'goToProjectDetail(' + ${project.id} + ')'" style="cursor: pointer;">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${project.title}"></h5>
+            <p class="card-text" th:text="${project.content}"></p>
+            <div class="card-tags">
+                <span th:each="tag : ${project.tags}" class="tag" th:text="${tag}"></span>
             </div>
         </div>
-    </nav>
-
-
-    <!-- Main Content -->
-    <div class="row">
-
-
-        <div class="col-md-4 news-section">
-            <h5>Weather [Yesterday]</h5>
-            <!-- 드롭다운 메뉴 추가 -->
-            <select id="weatherStationSelect" class="custom-select mb-3">
-                <option selected>지역 선택</option>
-                <!-- 서버에서 가져온 지역 이름들이 여기에 들어갑니다 -->
-            </select>
-            <div id="weatherDisplay" class="news-item">
-                <!-- 날씨 데이터가 여기에 표시됩니다 -->
-            </div>
+        <div class="card-footer">
+            <a th:href="${project.githubAddress}" target="_blank" th:text="${#strings.arraySplit(project.githubAddress, '/')[2]}">GitHub Repository</a>
         </div>
-
-
-        <!-- Events Section -->
-        <div class="col-md-4 news-section">
-            <h5>Today's Events</h5>
-            <!-- Events list will be populated here -->
-            <div id="eventsList" class="news-item">
-                <!-- Events data goes here -->
-            </div>
-        </div>
-
-        <!-- AI Advice Section -->
-        <div class="col-md-4 news-section">
-            <h5>AI Recommendations</h5>
-            <!-- AI recommendations will be populated here -->
-            <div id="aiAdvice" class="news-item">
-                <!-- AI advice data goes here -->
-            </div>
-        </div>
-
-    </div> <!-- End of Main Content Row -->
-
-    <!-- Additional Content or Sections could go here -->
-
-    <!-- Bookmarks Section -->
-    <div class="news-section">
-        <h5>Bookmarks</h5>
-        <div id="bookmarksList" class="d-flex flex-wrap justify-content-start">
-        </div>
-        <button id="editBookmarks" class="btn btn-sm btn-primary mt-2">Edit Bookmarks</button>
     </div>
+</div>
 
+<div class="chart-container" style="position: relative; height:40vh; width:80vw">
+    <canvas id="tagUsageChart"></canvas>
+    <canvas id="tagUserUsageChart"></canvas>
+</div>
 
-    <!-- Footer -->
-    <div class="footer">
-        <p>&copy; 2024 Your Newspaper. All rights reserved.</p>
-    </div>
-
-</div> <!-- End of Container -->
-
-<!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script>
-$(document).ready(function() {
-    var today = new Date().toISOString().substring(0, 10);
-
-    getEvents(today);
-    getBookmarks();
-
-});
-
-function getEvents(date) {
-    $.ajax({
-        url: '/getTodayEvents',
-        method: 'GET',
-        data: { eventDate: date },
-        success: function(response) {
-            displayEvents(response);
-            getAiAdvice(response);
-        },
-        error: function(xhr, status, error) {
-            console.error("Error: " + error);
-        }
-    });
-}
-
-function getAiAdvice(events) {
-    $.ajax({
-        url: '/aiAdvice',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({events: events}),
-        success: function(advice) {
-            displayAdvice(advice);
-        },
-        error: function(xhr, status, error) {
-            console.error("Error: " + error);
-        }
-    });
-}
-
-function displayEvents(events) {
-    $('#eventsList').empty();
-
-    events.forEach(event => {
-        $('#eventsList').append('<div class="alert alert-info">' + event.eventDate + ': ' + event.eventDescription + '</div>');
-    });
-}
-
-function displayAdvice(response) {
-    $('#aiAdvice').empty();
-    if (response && response.choices && response.choices.length > 0) {
-        var adviceContent = response.choices[0].message.content;
-        $('#aiAdvice').append('<div class="alert alert-success">' + adviceContent + '</div>');
-    } else {
-        $('#aiAdvice').append('<div class="alert alert-warning">일정을 등록하고 AI 추천을 받아보세요!</div>');
-    }
-}
-function getBookmarks() {
-        $.ajax({
-            url: '/getBookmarks',
-            method: 'GET',
-            success: function(bookmarks) {
-                displayBookmarks(bookmarks);
-            },
-            error: function(xhr, status, error) {
-                console.error("Error: " + error);
-            }
-        });
-    }
-
-function displayBookmarks(bookmarks) {
-    $('#bookmarksList').empty();
-    bookmarks.forEach(function(bookmark) {
-        var card = $('<div>', { class: 'card mx-auto', style: 'max-width: 18rem; margin: 10px;' });
-        var cardBody = $('<div>', { class: 'card-body text-center' });
-
-        var cardTitle = $('<h5>', { class: 'card-title', text: bookmark.name });
-        var cardText = $('<p>', { class: 'card-text', text: bookmark.name }); // Add description if available
-        var link = $('<a>', { href: bookmark.bookmarkUrl, class: 'btn btn-primary', text: 'Visit', target: '_blank' });
-
-        cardBody.append(cardTitle).append(cardText).append(link);
-        card.append(cardBody); // Add image to the top of the card
-
-        // Append the finished card to the bookmarks list
-        $('#bookmarksList').append(card);
-    });
-}
-
-
-
-// 날씨 정보 가져오기
-function getWeather(stationName) {
-    $.ajax({
-        url: '/get-weather',
-        method: 'GET',
-        data: { stationName: stationName },
-        success: function(weatherData) {
-            displayWeather(weatherData);
-        },
-        error: function(xhr, status, error) {
-            console.error("Error: " + error);
-        }
-    });
-}
-
-// 날씨 정보 표시
-function displayWeather(weatherData) {
-    try {
-        var weather = JSON.parse(weatherData);
-        if (weather && weather.response && weather.response.body && weather.response.body.items && weather.response.body.items.item && weather.response.body.items.item.length > 0) {
-            var item = weather.response.body.items.item[0]; // 첫 번째 아이템 사용
-
-            var content = '<h3>' + item.ta + '°C</h3>'; // 기온
-            content += '<p>습도: ' + item.hm + '%</p>'; // 습도
-            content += '<p>강수량: ' + (item.rn || '0') + 'mm</p>'; // 강수량
-            content += '<p>적설량: ' + (item.ssnw || '0') + 'cm</p>'; // 적설량
-
-            $('#weatherDisplay').html(content);
-        } else {
-            $('#weatherDisplay').html('<p>날씨 정보를 불러오는 데 실패했습니다.</p>');
-        }
-    } catch (e) {
-        console.error("Error parsing weather data: ", e);
-        $('#weatherDisplay').html('<p>날씨 정보 형식 오류가 발생했습니다.</p>');
-    }
-}
-
-
-// 지역 선택 이벤트 핸들러
-$('#weatherStationSelect').change(function() {
-    var stationName = $(this).val();
-    getWeather(stationName);
-});
-
-// 지역 이름 목록 가져오기
-function getStationNames() {
-    $.ajax({
-        url: '/get-station-names',
-        method: 'GET',
-        success: function(stationNames) {
-            populateStationDropdown(stationNames);
-        },
-        error: function(xhr, status, error) {
-            console.error("Error: " + error);
-        }
-    });
-}
-
-// 드롭다운 메뉴 채우기
-function populateStationDropdown(stationNames) {
-    var dropdown = $('#weatherStationSelect');
-    dropdown.empty(); // 기존 목록 비우기
-    dropdown.append($('<option>', {
-        value: '',
-        text: '지역 선택',
-        selected: true,
-        disabled: true
-    }));
-    stationNames.forEach(function(name) {
-        dropdown.append($('<option>', {
-            value: name,
-            text: name
-        }));
-    });
-}
-
-// 페이지 로드 시 지역 이름 목록 가져오기
-$(document).ready(function() {
-    getStationNames();
-});
-
-
-$('#editBookmarks').click(function() {
-    window.location.href = '/bookmark';
-});
-
-</script>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script>
+function createProjectCards(projects) {
+    const container = document.getElementById('projects-container');
+    container.innerHTML = ''; // 기존 내용을 지웁니다.
+
+    projects.forEach(project => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const cardBody = document.createElement('div');
+        cardBody.className = 'card-body';
+
+        const title = document.createElement('h5');
+        title.className = 'card-title';
+        title.textContent = project.title;
+        cardBody.appendChild(title);
+
+        const description = document.createElement('p');
+        description.className = 'card-text';
+        description.textContent = project.content;
+        cardBody.appendChild(description);
+
+        const tagsDiv = document.createElement('div');
+        tagsDiv.className = 'card-tags';
+        project.tags.forEach(tag => {
+            const span = document.createElement('span');
+            span.className = 'tag';
+            span.textContent = tag;
+            tagsDiv.appendChild(span);
+        });
+        cardBody.appendChild(tagsDiv);
+
+        // cardFooter 선언
+        const cardFooter = document.createElement('div');
+        cardFooter.className = 'card-footer';
+
+        if (project.githubAddress) {
+            const githubLink = document.createElement('a');
+            githubLink.setAttribute('href', project.githubAddress);
+            githubLink.setAttribute('target', '_blank');
+
+            // URL에서 호스트 이름 뒤의 첫 번째 경로 부분을 추출하여 표시
+            const urlParts = project.githubAddress.split('/');
+            if (urlParts.length > 2) {
+                githubLink.textContent = urlParts[3]; //
+            } else {
+                githubLink.textContent = 'GitHub Repository';
+            }
+
+            cardFooter.appendChild(githubLink);
+        }
+
+
+        card.appendChild(cardBody);
+        card.appendChild(cardFooter);
+
+        container.appendChild(card);
+    });
+}
+
+
+function fetchProjectsByTag(tagName) {
+    let url;
+    if (tagName === 'All') {
+        url = `http://localhost:9000/project/all`;
+    } else {
+        url = `http://localhost:9000/project/search-tag?tagName=${tagName}`;
+    }
+
+    fetch(url)
+        .then(response => response.json())
+        .then(projects => {
+            createProjectCards(projects);
+        })
+        .catch(error => {
+            console.error('Error fetching projects:', error);
+        });
+}
+
+// 페이지 로드 완료시 실행되는 함수
+document.addEventListener('DOMContentLoaded', function() {
+    // 여기에서 초기 프로젝트 목록을 로드하는 로직을 추가할 수 있습니다.
+    // 예: createProjectCards(initialProjects);
+
+    // 태그 버튼에 대한 이벤트 리스너를 추가합니다.
+    document.querySelectorAll('.tag-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            const tagName = this.textContent;
+            fetchProjectsByTag(tagName);
+        });
+    });
+
+    // '글쓰러가기' 버튼에 대한 이벤트 리스너를 추가합니다.
+    const writeButton = document.getElementById('writeButton');
+    writeButton.addEventListener('click', function() {
+        window.location.href = '/write-project';
+    });
+});
+
+function drawTagUsageChart(tagData) {
+    const ctx = document.getElementById('tagUsageChart').getContext('2d');
+    const labels = tagData.map(data => data[0]); // Get the tag names
+    const data = tagData.map(data => data[1]); // Get the tag counts
+
+    new Chart(ctx, {
+        type: 'bar', // Correct type for newer versions of Chart.js
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Tag Usage',
+                data: data,
+                backgroundColor: 'rgba(0, 123, 255, 0.5)', // Bootstrap primary color with opacity
+                borderColor: 'rgba(0, 123, 255, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y', // This will make the bar chart horizontal
+            scales: {
+                x: { // This should be 'x' since the chart is horizontal
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+}
+
+
+// 색상을 조금 더 어둡게 조정하는 함수
+function shadeColor(color, percent) {
+    let R = parseInt(color.substring(1,3), 16);
+    let G = parseInt(color.substring(3,5), 16);
+    let B = parseInt(color.substring(5,7), 16);
+
+    R = parseInt(R * (100 + percent) / 100);
+    G = parseInt(G * (100 + percent) / 100);
+    B = parseInt(B * (100 + percent) / 100);
+
+    R = (R<255)?R:255;
+    G = (G<255)?G:255;
+    B = (B<255)?B:255;
+
+    const RR = ((R.toString(16).length==1)?"0"+R.toString(16):R.toString(16));
+    const GG = ((G.toString(16).length==1)?"0"+G.toString(16):G.toString(16));
+    const BB = ((B.toString(16).length==1)?"0"+B.toString(16):B.toString(16));
+
+    return "#"+RR+GG+BB;
+}
+
+// 데이터를 불러와 그래프를 그리는 함수 호출
+fetch('http://localhost:9000/project/static')
+    .then(response => response.json())
+    .then(data => {
+        drawTagUsageChart(data);
+    })
+    .catch(error => {
+        console.error('Error fetching tag usage data:', error);
+    });
+
+fetch('http://localhost:9000/project/static/user')
+    .then(response => response.json())
+    .then(data => {
+        drawUserTagUsageChart(data); // 새로운 엔드포인트에서 가져온 사용자 태그 통계 데이터로 그래프를 그립니다.
+    })
+    .catch(error => {
+        console.error('Error fetching user tag usage data:', error);
+    });
+function drawUserTagUsageChart(tagData) {
+    const ctx = document.getElementById('tagUserUsageChart').getContext('2d');
+    const labels = tagData.map(data => data[0]); // Get the tag names
+    const data = tagData.map(data => data[1]); // Get the tag counts
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Tag Usage',
+                data: data,
+                backgroundColor: 'rgba(128, 128, 128, 0.5)',
+                borderColor: 'rgba(0, 0, 0, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y', // This will make the bar chart horizontal
+            scales: {
+                x: { // This should be 'x' since the chart is horizontal
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+}
+</script>
 </html>
+

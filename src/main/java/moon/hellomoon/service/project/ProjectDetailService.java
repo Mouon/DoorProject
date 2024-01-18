@@ -1,9 +1,6 @@
 package moon.hellomoon.service.project;
 
-import lombok.Setter;
-import moon.hellomoon.domain.Board;
 import moon.hellomoon.domain.Project;
-import moon.hellomoon.dto.Board.BoardDetailResponse;
 import moon.hellomoon.dto.project.ProjectDetailResponse;
 import moon.hellomoon.repository.jpaRepository.JpaProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;

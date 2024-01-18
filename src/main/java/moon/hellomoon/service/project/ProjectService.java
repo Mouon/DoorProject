@@ -1,14 +1,11 @@
 package moon.hellomoon.service.project;
 
-import moon.hellomoon.domain.Diary;
 import moon.hellomoon.domain.Member;
 import moon.hellomoon.domain.Project;
-import moon.hellomoon.dto.diary.DiaryCreateRequest;
 import moon.hellomoon.dto.project.ProjectInsertRequest;
 import moon.hellomoon.repository.jpaRepository.JpaMemberRepository;
 import moon.hellomoon.repository.jpaRepository.JpaProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +35,10 @@ public class ProjectService {
     public void addProject(ProjectInsertRequest request){
         Project project = mapToProjectDomain(request);
         projectRepository.save(project);
+    }
+
+    public List<Project> getProjectsByTag(String tagName){
+        return projectRepository.findByTag(tagName);
     }
 
     public List<Project> getAllProjects(){

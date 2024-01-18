@@ -8,6 +8,7 @@ import moon.hellomoon.domain.Project;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -30,11 +31,30 @@ public class JpaProjectRepository {
 
     public List<Project> findByUser(Long userId) {
         Member member = em.find(Member.class, userId);
-        String jpql = "SELECT p FROM Project p WHERE p.member = :member";
-        TypedQuery<Project> query = em.createQuery(jpql, Project.class);
+        TypedQuery<Project> query = em.createQuery("SELECT p FROM Project p WHERE p.member = :member", Project.class);
         query.setParameter("member", member);
 
         return query.getResultList();
+    }
+
+
+    public List<Project> findByTag(String tagName) {
+        return em.createQuery("SELECT p FROM Project p JOIN p.tags t WHERE t = :tagName", Project.class)
+                .setParameter("tagName", tagName)
+                .getResultList();
+    }
+
+    public List<Object[]> CountUserTag(Long userId) {
+        Member member = em.find(Member.class, userId);
+        return em.createQuery("SELECT t, COUNT(p) FROM Project p JOIN p.tags t WHERE p.member = :member GROUP BY t", Object[].class)
+                .setParameter("member", member)
+                .getResultList();
+    }
+
+    public List<Object[]> CountTag(String tagName){
+        return em.createQuery("SELECT t, COUNT(p) FROM Project p JOIN p.tags t WHERE t = :tagName GROUP BY t", Object[].class)
+                .setParameter("tagName",tagName)
+                .getResultList();
     }
 
 
@@ -42,4 +62,10 @@ public class JpaProjectRepository {
         return (List<Project>) em.createQuery("select p from Project p",Project.class)
                 .getResultList();
     }
+
+    public List<Object[]> countAllTags(){
+        return em.createQuery("SELECT t, COUNT(p) FROM Project p JOIN p.tags t GROUP BY t", Object[].class)
+                .getResultList();
+    }
+
 }

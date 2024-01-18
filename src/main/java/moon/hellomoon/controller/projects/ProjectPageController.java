@@ -1,6 +1,5 @@
 package moon.hellomoon.controller.projects;
 
-import moon.hellomoon.dto.Board.BoardDetailResponse;
 import moon.hellomoon.dto.project.ProjectDetailResponse;
 import moon.hellomoon.service.project.ProjectDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
