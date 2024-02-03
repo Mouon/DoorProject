@@ -2,14 +2,14 @@ package moon.hellomoon.service.project;
 
 import moon.hellomoon.domain.Project;
 import moon.hellomoon.dto.project.ProjectDetailResponse;
-import moon.hellomoon.repository.jpaRepository.JpaProjectRepository;
+import moon.hellomoon.repository.jpaRepository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProjectDetailService {
     @Autowired
-    JpaProjectRepository projectRepository;
+    ProjectRepository projectRepository;
 
 
     public ProjectDetailResponse detail(Long id) throws Exception{

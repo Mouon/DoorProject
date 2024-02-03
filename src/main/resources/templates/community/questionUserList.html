@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Project List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 이 부분은 카드의 최소 크기와 최대 크기를 정의합니다. */
+        gap: 20px;
+        padding: 20px;
+    }
+    .card {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+        padding: 15px;
+        height: 300px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    .card h3 {
+        margin: 15px 0 5px 0;
+        color: #333;
+    }
+    .card p {
+        color: #666;
+        line-height: 1.6;
+    }
+    .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 10px;
+    }
+    .footer .username {
+        color: #333;
+        font-weight: bold;
+    }
+    .footer .date {
+        font-size: 14px;
+    }
+    .card-img-top {
+      width: 100%;
+      height: 200px; /* 이미지 높이 설정 */
+      object-fit: cover; /* 이미지 비율 유지 */
+    }
+    .card-body {
+      padding: 15px;
+    }
+    .card-title {
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+    .card-text {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 15px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      display: block;
+      line-height: 1.4;
+      height: 2.8em;
+      margin-bottom: 15px;
+      width: 100%;
+      max-width: 100%;
+    }
+    .card-tags {
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .tag {
+      display: inline-block;
+      background-color: #000;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 15px;
+      margin-right: 5px;
+      font-size: 12px;
+    }
+    .card-footer {
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      background-color: #f8f9fa;
+      border-top: 1px solid #eeeeee;
+    }
+    .card-footer a {
+      color: #000; /* 검은색 텍스트 */
+      text-decoration: none; /* 밑줄 없앰 */
+    }
+    .username {
+      font-weight: bold;
+    }
+    .likes, .views {
+      display: flex;
+      align-items: center;
+    }
+    .fa-heart, .fa-eye {
+      margin-right: 5px;
+    }
+    .nav-bar-custom {
+            padding: 10px 0;
+    }
+    .write-button {
+      position: fixed; /* 고정 위치 설정 */
+      bottom: 20px; /* 하단 여백 설정 */
+      right: 20px; /* 우측 여백 설정 */
+      background-color: #007bff; /* 버튼 배경색 설정 */
+      color: white; /* 버튼 텍스트 색상 설정 */
+      padding: 10px 20px; /* 버튼 내부 패딩 설정 */
+      border: none; /* 테두리 제거 */
+      border-radius: 5px; /* 버튼 모서리 둥글게 설정 */
+      cursor: pointer;
+    }
+    .navbar-custom {
+      background-color: #f8f9fa; /* Light grey background */
+      color: #343a40; /* Dark grey text */
+    }
+    .navbar-custom .navbar-brand,
+    .navbar-custom .nav-link {
+      color: #343a40; /* Dark grey text */
+    }
+    .navbar-custom .nav-link {
+      margin-right: 10px; /* Spacing between nav items */
+    }
+    .navbar-custom .nav-link:hover {
+      color: #0056b3; /* Color change on hover */
+    }
+    /* 태그 버튼 스타일 */
+    .tag-btn {
+        display: inline-block;
+        background-color: #000; /* 검은색 배경 */
+        color: #fff; /* 흰색 텍스트 */
+        padding: 5px 10px; /* 패딩 */
+        border-radius: 15px; /* 둥근 모서리 */
+        margin-right: 5px; /* 오른쪽 여백 */
+        font-size: 12px; /* 폰트 크기 */
+        border: none; /* 테두리 없음 */
+        cursor: pointer; /* 커서 스타일 */
+    }
+    .tag-btn:hover {
+        background-color: #333; /* 호버 시 배경색 변경 */
+    }
+    .chart-container {
+    display: flex;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional: adds a shadow for depth */
+    background-color: #fff; /* Matches the card color */
+    border-radius: 10px; /* Matches the card style */
+    margin-bottom: 20px;
+    }
+    .canvas-item {
+    margin: 10px; /* 캔버스 간 여백 설정 */
+    flex: 1; /* 캔버스들이 컨테이너 공간을 균등하게 차지하도록 설정 */
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light nav-bar-custom">
+    <div class="container">
+        <a class="navbar-brand" href="/">Moon</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/project-list" class="nav-link">Projects</a></li>
+                <li class="nav-item"><a href="/project-list/user" class="nav-link">My Projects</a></li>
+                <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                <li class="nav-item"><a href="/members/new" class="nav-link">Sign Up</a></li>
+                <li class="nav-item"><a href="/members" class="nav-link">Members List</a></li>
+                <li class="nav-item"><a href="/members/member-detail" class="nav-link">Member Info</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Questions
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/questions-list">All Questions</a>
+                        <a class="dropdown-item" href="/questions-list/user">My Questions</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container" id="user-questions-container">
+    <div th:each="question : ${questions}" class="card">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${question.title}"></h5>
+            <p class="card-text" th:text="${question.content}"></p>
+        </div>
+        <div class="card-footer">
+            <span class="username" th:text="${question.memberId}"></span>
+            <span class="likes">
+                <i class="fa fa-heart"></i> <span th:text="${question.likeCount}"></span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts are the same as the home page -->
+<!-- ... -->
+</body>
+</html>

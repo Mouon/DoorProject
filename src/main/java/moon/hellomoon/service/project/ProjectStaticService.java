@@ -1,6 +1,6 @@
 package moon.hellomoon.service.project;
 
-import moon.hellomoon.repository.jpaRepository.JpaProjectRepository;
+import moon.hellomoon.repository.jpaRepository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class ProjectStaticService {
     @Autowired
-    JpaProjectRepository projectRepository;
+    ProjectRepository projectRepository;
 
     public List<Object[]> ProjectStaticByTag(String tagName){
         return projectRepository.CountTag(tagName);

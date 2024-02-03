@@ -3,8 +3,8 @@ package moon.hellomoon.service.project;
 import moon.hellomoon.domain.Member;
 import moon.hellomoon.domain.Project;
 import moon.hellomoon.dto.project.ProjectInsertRequest;
-import moon.hellomoon.repository.jpaRepository.JpaMemberRepository;
-import moon.hellomoon.repository.jpaRepository.JpaProjectRepository;
+import moon.hellomoon.repository.jpaRepository.MemberRepository;
+import moon.hellomoon.repository.jpaRepository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,9 +15,9 @@ import java.util.List;
 public class ProjectService {
 
     @Autowired
-    JpaProjectRepository projectRepository;
+    ProjectRepository projectRepository;
     @Autowired
-    JpaMemberRepository memberRepository;
+    MemberRepository memberRepository;
 
     private Project mapToProjectDomain(ProjectInsertRequest request){
 

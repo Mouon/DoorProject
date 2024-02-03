@@ -3,18 +3,17 @@ package moon.hellomoon.repository.jpaRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import moon.hellomoon.domain.Member;
-import moon.hellomoon.repository.repositoryInterface.MemberRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class JpaMemberRepository implements MemberRepository {
+public class MemberRepository implements moon.hellomoon.repository.repositoryInterface.MemberRepository {
 
     private final EntityManager em;
 
-    public JpaMemberRepository(EntityManager em){
+    public MemberRepository(EntityManager em){
         this.em=em;
     }
     @Override

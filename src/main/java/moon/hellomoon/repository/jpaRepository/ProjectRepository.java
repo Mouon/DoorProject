@@ -8,14 +8,13 @@ import moon.hellomoon.domain.Project;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Repository
-public class JpaProjectRepository {
+public class ProjectRepository {
     private final EntityManager em;
 
-    public JpaProjectRepository(EntityManager em) {
+    public ProjectRepository(EntityManager em) {
         this.em = em;
     }
 

@@ -1,9 +1,11 @@
-package moon.hellomoon.controller.projects;
+package moon.hellomoon.controller.QnA;
 
 import moon.hellomoon.domain.Member;
+import moon.hellomoon.dto.QnA.QuestionRequest;
 import moon.hellomoon.dto.project.ProjectInsertRequest;
-import moon.hellomoon.repository.repositoryInterface.MemberRepository;
-import moon.hellomoon.service.project.ProjectService;
+import moon.hellomoon.repository.jpaRepository.MemberRepository;
+import moon.hellomoon.service.QnA.QuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -14,26 +16,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class projectAddController {
+public class QuestionWriteController {
 
-    private final MemberRepository memberRepository;
-    private final ProjectService projectService;
+    QuestionService questionService;
+    MemberRepository memberRepository;
 
-    public projectAddController(MemberRepository memberRepository, ProjectService projectService) {
+    @Autowired
+    public QuestionWriteController(QuestionService questionService, MemberRepository memberRepository) {
+        this.questionService = questionService;
         this.memberRepository = memberRepository;
-        this.projectService = projectService;
     }
 
-
-    @PostMapping("/projects")
-    public ResponseEntity<?> addProject(@RequestBody ProjectInsertRequest request) {
+    @PostMapping("/question")
+    public ResponseEntity<?> addQuestion(@RequestBody QuestionRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             Member member = memberRepository.findByEmail(userDetails.getUsername())
                     .orElseThrow(() -> new RuntimeException("Member not found"));
             request.setMemberId(member.getId());
-            projectService.addProject(request);
+            questionService.addQuestion(request);
             return ResponseEntity.ok().build();
         }else{
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

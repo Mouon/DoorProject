@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Question Write</title>
+    <!-- 부트스트랩 CSS 추가 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Write a Question</h2>
+    <form id="questionForm">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="content">Content</label>
+            <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script>
+$(document).ready(function() {
+    $("#questionForm").submit(function(event) {
+        event.preventDefault();
+
+        var formData = {
+            title: $("#title").val(),
+            content: $("#content").val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/question", // 상대 경로 사용
+            contentType: "application/json",
+            data: JSON.stringify(formData),
+            success: function(response) {
+                alert("Question submitted successfully!");
+                window.location.href = "/questions-list"; // 질문 목록 페이지로 리디렉션
+            },
+            error: function(xhr, status, error) {
+                alert("An error occurred: " + xhr.responseText);
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
